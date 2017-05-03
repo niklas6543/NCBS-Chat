@@ -11,7 +11,11 @@ import java.io.PrintWriter;
 public class Server {
 
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+		
+>>>>>>> Initial Commit
 		try {
 			//starting server
 			ServerSocket server = new ServerSocket(5555);
@@ -36,6 +40,10 @@ public class Server {
 				System.out.println("receive from client: "+s);
 				
 			}
+<<<<<<< HEAD
+=======
+			System.out.println("DIE SCHLEIFE IST BEENDET");
+>>>>>>> Initial Commit
 			
 			writer.close();
 			reader.close();
@@ -43,8 +51,14 @@ public class Server {
 			
 			
 		} catch (IOException e) {
+<<<<<<< HEAD
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+=======
+			// TODO only for debuging
+			e.printStackTrace();
+			System.out.println("Socket is allready used");
+>>>>>>> Initial Commit
 		}
 	}
 
