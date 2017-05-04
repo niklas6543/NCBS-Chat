@@ -1,5 +1,8 @@
 
 public class ServerMessage {
+	
+	/* header,chatId,"senderName","receiveName",the rest is message */
+	
 	// Flags for handle the flag
 	public static final int LOGIN = 0;
 	public static final int MESSAGE = 1;
@@ -11,7 +14,7 @@ public class ServerMessage {
 	private int chatId; // TODO not in use already
 	private int header; // how to handle the message
 
-	/* header,chatId,"senderName","receiveName",the rest is message */
+
 
 	public ServerMessage(String serverMessage) throws Exception {
 		String[] s;
@@ -38,6 +41,14 @@ public class ServerMessage {
 		this.receiveName = receiveName;
 		this.chatId = chatId;
 		this.header = header;
+	}
+	
+	public void setHeader(int header){
+		this.header = header;
+	}
+	
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public String getMessage() {
@@ -70,7 +81,7 @@ public class ServerMessage {
 		re += "\",\"";
 		re += trimm(this.receiveName);
 		re += "\",";
-		re += trimm(this.message);
+		re += this.message;
 		return re;
 	}
 
@@ -90,6 +101,7 @@ public class ServerMessage {
 	}
 
 	private String retrimm(int start, String serverMessage) throws Exception {
+		// Opposite of trimm()
 		String re = "";
 		while (++start < (serverMessage.length() - 1)) {
 

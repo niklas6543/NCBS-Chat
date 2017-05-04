@@ -2,62 +2,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-<<<<<<< HEAD
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
-=======
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
->>>>>>> Initial Commit
+
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
 public class Client {
-<<<<<<< HEAD
+
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		try {
-			//create client
-			Socket client = new Socket("localhost", 5555);
-			System.out.println("client started...");
-			
-			//create streams
-			OutputStream out = client.getOutputStream();
-			PrintWriter writer = new PrintWriter(out);
-			
-			InputStream in = client.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
-			//send data to the server
-			writer.write("Hallo Welt!!!\n");
-			writer.flush();
-			
-			//search for receiving data
-			String s = null;
-			
-			while ((s = reader.readLine()) != null) {
-				System.out.println("receive from server: "+s);
-				
-			}
-			
-			writer.close();
-			reader.close();
-			
-			
-			
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-=======
-	public static void start() {
 
 		try {
 			// create client
@@ -70,22 +24,22 @@ public class Client {
 
 			InputStream in = client.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
-			String message = "hallo";
-			// send data to the server
+
+			String message = "";
+			// send login message to the server
 			Scanner scan = new Scanner(System.in);
+			ServerMessage send = new ServerMessage("test", "Schunk", "server", 0, ServerMessage.LOGIN);
+			writer.write(send.toString().concat("\n"));
+			writer.flush();
+			//searchForData(reader);
+			
 			while (!message.equals(".exit")) {
 				message = scan.nextLine();
-				writer.write(message.concat("\n") );
+				send.setMessage(message);
+				writer.write(send.toString().concat("\n"));
 				writer.flush();
 
-				// search for receiving data
-				String s = null;
-
-				if ((s = reader.readLine()) != null) {
-					System.out.println("receive from server: " + s);
-
-				}
+				searchForData(reader);
 			}
 			scan.close();
 			client.close();
@@ -108,6 +62,23 @@ public class Client {
 			System.out.println("Bye");
 		}
 
->>>>>>> Initial Commit
+	}
+	
+	public static void searchForData(BufferedReader reader){
+		// search for receiving data
+		String s = null;
+		try {
+			if ((s = reader.readLine()) != null) {
+				try {
+					ServerMessage got = new ServerMessage(s);
+					System.out.println("receive from server: " + got.getMessage());
+				} catch (Exception e) {
+					System.out.println("Fuck");
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

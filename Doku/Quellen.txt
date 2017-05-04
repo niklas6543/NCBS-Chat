@@ -2,10 +2,4 @@ Quellen
 
 Zugriff - 30.04.17
 https://techjoomla.com/products/jbolo 
-<<<<<<< HEAD
 http://www.camtec.com/java.php
-=======
-http://www.camtec.com/java.php
-
-http://openbook.rheinwerk-verlag.de/javainsel9/
->>>>>>> Initial Commit
