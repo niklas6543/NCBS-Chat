@@ -84,7 +84,7 @@ public class ServerMessage {
 		re += this.message;
 		return re;
 	}
-
+	//quote
 	private String trimm(String unsave) {
 		String save = "";
 		for (int i = 0; i < unsave.length(); i++) {
@@ -99,7 +99,7 @@ public class ServerMessage {
 		}
 		return save;
 	}
-
+	//unquote
 	private String retrimm(int start, String serverMessage) throws Exception {
 		// Opposite of trimm()
 		String re = "";

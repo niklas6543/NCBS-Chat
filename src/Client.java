@@ -10,12 +10,17 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 public class Client {
-
-	public static void main(String[] args) {
-
+	private int port;
+	
+	public  void setPort(int port){
+		this.port = port;
+	}
+	
+	//public void main(String args[]) {
+	public static void main(String args[]){
 		try {
 			// create client
-			Socket client = new Socket("localhost", 5555);
+			Socket client = new Socket("localhost", 55555);
 			System.out.println("client started...");
 
 			// create streams
@@ -32,6 +37,7 @@ public class Client {
 			writer.write(send.toString().concat("\n"));
 			writer.flush();
 			//searchForData(reader);
+			
 			
 			while (!message.equals(".exit")) {
 				message = scan.nextLine();
@@ -81,4 +87,10 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+
+	
+
+	
+	
+	
 }

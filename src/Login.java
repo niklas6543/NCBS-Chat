@@ -55,7 +55,6 @@ public class Login {
 		try {
 			//create MySQL query
 			myStmt = connect.createStatement();
-		
 			//get passwd from database
 			ResultSet result = myStmt.executeQuery(String.format("select * from user where username=\"%s\";", username));
 			
@@ -66,6 +65,7 @@ public class Login {
 					return true;
 				} else {
 					System.out.println("login failed");
+					
 				}
 			}
 			
