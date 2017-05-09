@@ -33,7 +33,12 @@ public class Client {
 			String message = "";
 			// send login message to the server
 			Scanner scan = new Scanner(System.in);
-			ServerMessage send = new ServerMessage("test", "Schunk", "server", 0, ServerMessage.LOGIN);
+			
+			System.out.println("entry user...");
+			String username = scan.nextLine();
+			System.out.println("enter password...");
+			String password = scan.nextLine();
+			ServerMessage send = new ServerMessage(password, username, "server", 0, ServerMessage.LOGIN);
 			writer.write(send.toString().concat("\n"));
 			writer.flush();
 			//searchForData(reader);
@@ -47,6 +52,10 @@ public class Client {
 
 				searchForData(reader);
 			}
+			
+			send.setMessage("logout");
+			writer.write(send.toString().concat("\n"));
+			writer.flush();
 			scan.close();
 			client.close();
 			writer.close();

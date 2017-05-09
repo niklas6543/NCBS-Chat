@@ -36,28 +36,24 @@ public class AcceptClients extends Thread{
 				int status = ServerMessage.LOGIN; // 0 = not logged in, 1 = logged in
 		
 				while ((s = reader.readLine()) != null) {
-					writer.write(s+"\n");
-					writer.flush();
-			
-					ServerMessage get;
+								
+					ServerMessage message;
 					try {
-						get = new ServerMessage(s);
-						
+
+						message = new ServerMessage(s);
 						switch (status) {
 							case ServerMessage.MESSAGE:
 								// TODO send to get.getReceiveName()
-								System.out.println("receive from "+get.getSendName()+": "+ get.getMessage());
+								writer.write(s+"\n");
+								writer.flush();
+								System.out.println("receive from "+message.getSendName()+": "+ message.getMessage());
 								break;
 							case ServerMessage.LOGIN:
 								// TODO das hier ist Stelle für deine Anmeldung
 								//try to login
-								
-								if (Login.tryToLogin(this.connect, get.getSendName(), get.getMessage())){
-									get.setHeader(ServerMessage.MESSAGE);
+								if (Login.tryToLogin(this.connect, message.getSendName(), message.getMessage())){
+									message.setHeader(ServerMessage.MESSAGE);
 									status = ServerMessage.MESSAGE;
-									/*writer.write(get.toString().concat("\n"));
-									writer.flush();
-									searchForData(reader);*/
 								}
 					
 								break;
@@ -68,7 +64,7 @@ public class AcceptClients extends Thread{
 								System.out.println("Houston, we have a problem");
 								break;
 						}
-				
+						
 					} catch (Exception e) {
 						System.out.println("not able to parse message");
 					}
@@ -86,26 +82,5 @@ public class AcceptClients extends Thread{
 					e1.printStackTrace();
 				}		
 			}
-		
-	
-	
-	public static void searchForData(BufferedReader reader){
-		// search for receiving data
-		String s = null;
-		
-		try {
-			if ((s = reader.readLine()) != null) {
-				try {
-					ServerMessage got = new ServerMessage(s);
-					System.out.println("receive from client: " + got.getMessage());
-				} catch (Exception e) {
-					System.out.println("Fuck");
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
 

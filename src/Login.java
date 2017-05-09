@@ -16,7 +16,8 @@ public class Login {
 		Connection connect = null;
 		try {
 			//try to connect database
-			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/NCBS-Chat-DB", "root", "");
+			//connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/NCBS-Chat-DB", "root", "");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/NCBSChatDB", "Niklas", "1234");
 			System.out.println("connect to database was successful");
 			
 			
@@ -51,13 +52,17 @@ public class Login {
 	}
 	 
 	public static boolean tryToLogin(Connection connect, String username, String passwd){
-		Statement myStmt;
+		PreparedStatement myStmt;
+		
 		try {
 			//create MySQL query
-			myStmt = connect.createStatement();
-			//get passwd from database
-			ResultSet result = myStmt.executeQuery(String.format("select * from user where username=\"%s\";", username));
+			String sql = "select * from user where username = ?;";
+			myStmt = connect.prepareStatement(sql);
+			myStmt.setString(1, username);
 			
+			//get passwd from database
+			ResultSet result = myStmt.executeQuery();
+		
 			if (result.next()){
 				//check the password
 				if (generateHash(passwd).equals(result.getString("passwd"))) {

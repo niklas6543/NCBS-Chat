@@ -20,13 +20,13 @@ public class Server {
 				server = new ServerSocket(55555);
 				//ServerSocket server = new ServerSocket(0, 10);
 				while (true){
+					//waiting for connection
 					Socket client = server.accept();
-					
+					//create a new client thread
 					Thread th = new Thread(new AcceptClients(client, connect));
 					th.start();
 					
 				}
-				//server.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
