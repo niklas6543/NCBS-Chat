@@ -3,16 +3,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 
-
-
-
 public class Server {
 
 	public static void main(String[] args) {
 
 		// TODO Auto-generated method stub
 			System.out.println("server is running...");
-			Connection connect = Login.connectToDatabase();
+			Connection connect = new Database().connectToDatabase();
 	
 			//starting server
 			ServerSocket server;
