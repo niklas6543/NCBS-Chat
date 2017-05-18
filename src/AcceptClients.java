@@ -51,7 +51,7 @@ public class AcceptClients extends Thread{
 							case ServerMessage.LOGIN:
 								// TODO das hier ist Stelle für deine Anmeldung
 								//try to login
-								if (Login.tryToLogin(this.connect, message.getSendName(), message.getMessage())){
+								if (new Database().tryToLogin(message.getSendName(), message.getMessage())){
 									message.setHeader(ServerMessage.MESSAGE);
 									status = ServerMessage.MESSAGE;
 								}
