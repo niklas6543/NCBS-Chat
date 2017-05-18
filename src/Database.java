@@ -1,8 +1,10 @@
 import java.nio.charset.StandardCharsets;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Timestamp;
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +23,7 @@ public class Database implements ServerDatabase{
 		// TODO Auto-generated method stub
 		Database db = new Database();
 		connectToDatabase();
-		db.setOnline("Schunk");
+		db.sendMessage(1, new ServerMessage("Hallp", "Boseck", "Schunk", 1, 0), Instant.now());;
 		
 	}
 	
@@ -222,13 +224,33 @@ public class Database implements ServerDatabase{
 	}
 
 	@Override
-	public void sendMessage(int chatId) {
+	public void sendMessage(int chatId, ServerMessage message, Instant time) {
 		// TODO save the message to all clients with the chatid (message and timestamp)
-		
+		//create MySQL query
+				PreparedStatement myStmt;
+				System.out.println(time.toString());
+				try {
+					String sql = "INSERT INTO message(message, chatid, sender, receiver, sendtime) VALUES (?,?,?,?,?)";
+					
+					myStmt = connect.prepareStatement(sql);
+					myStmt.setString(1, message.getMessage());
+					myStmt.setInt(2, chatId);
+					myStmt.setString(3, message.getSendName());
+					myStmt.setString(4, message.getReceiveName());
+					myStmt.setString(5, time.toString());
+					
+					//insert message into database
+					myStmt.execute();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 	}
 
 	@Override
-	public ArrayList<bufferdMessage> getMessagesSince(int chatId, Timestamp since) {
+	public ArrayList<bufferdMessage> getMessagesSince(int chatId, Instant since) {
 		// TODO get all messages since timestamp
 		return null;
 	}

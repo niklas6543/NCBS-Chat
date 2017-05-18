@@ -2,6 +2,7 @@
 
 import java.security.Timestamp;
 import java.sql.Connection;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +19,7 @@ public interface ServerDatabase {
 	
 	public void setOffline(String username);
 	
-	public void sendMessage(int chatId);
+	public void sendMessage(int chatId, ServerMessage message, Instant time);
 
 	public class bufferdMessage {
 		String message;
@@ -27,7 +28,7 @@ public interface ServerDatabase {
 		
 	}
 	
-	public ArrayList<bufferdMessage> getMessagesSince(int chatId, Timestamp since);
+	public ArrayList<bufferdMessage> getMessagesSince(int chatId, Instant since);
 
 	public HashMap<Integer, String> getReceivers(int chatid);
 
